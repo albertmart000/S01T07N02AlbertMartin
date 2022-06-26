@@ -5,28 +5,27 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.*;
 
-public class Main {
+public class App {
     public static void main(String[] args) {
 
         Person person = new Person("Nom", "Cognom", 25);
-
-        //  ObjectMapper mapper = new ObjectMapper();
-
-        serializeObject(person);
-        //deserializeObject();
+        String directoryFile = "person.json";
+        serializeObject(person, directoryFile);
 
     }
 
-    private static void serializeObject(Person person) {
+    //Serialitzem l'objecte Person en un fitxer JSON.
+    @DirectoryFileJSon
+    private static void serializeObject(Person person, String directoryFile) {
 
         try {
-            shownJson(person);
+            shownJson(person,directoryFile );
             saveJsonInFile(person);
-            System.out.println("Arxiu creat correctament.");
+            System.out.println("\nArxiu creat correctament.");
 
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
+            }
 
     }
 
@@ -37,47 +36,11 @@ public class Main {
         System.out.println(json);
     }
 
-    private static void shownJson(Person person) throws IOException {
+    @DirectoryFileJSon()
+    private static void shownJson(Person person, String directoryFile) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.writerWithDefaultPrettyPrinter()
-              .writeValue(new File("person.json"), person);
+              .writeValue(new File(directoryFile), person);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   /* private static void deserializeObject() {
-        try {
-            ObjectInputStream readFile = new ObjectInputStream(new FileInputStream("Fruits.ser"));
-            Object inputFruit = readFile.readObject();
-            readFile.close();
-            System.out.println(inputFruit);
-
-        }
-        catch (IOException | ClassNotFoundException e){
-            e.printStackTrace();
-        }
-    }*/
-
-      /*  try {
-            mapper.writeValue(System.out, person);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }*/
 
 }
